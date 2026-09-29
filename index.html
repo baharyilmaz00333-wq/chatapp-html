@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f8faf7" />
+  <meta name="description" content="Mimo ile sevdiklerine, arkadaşlarına ve gruplarına bir mesaj kadar yakın ol." />
+  <title>mimo — Sevdiklerin bir mesaj uzağında</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f8faf7;
+      --paper: #ffffff;
+      --ink: #18231d;
+      --muted: #66736a;
+      --line: #e5ebe5;
+      --green: #25d366;
+      --green-dark: #075e54;
+      --green-soft: #d9fdd3;
+      --green-pale: #eaf7ed;
+      --ease-out: cubic-bezier(.23, 1, .32, 1);
+      --ease-in-out: cubic-bezier(.77, 0, .175, 1);
+      --ease: cubic-bezier(.25, .1, .25, 1);
+      --shadow: 0 28px 76px rgba(28, 49, 35, .12), 0 3px 10px rgba(28, 49, 35, .06);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--bg); font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .shell { width: min(1160px, calc(100% - 56px)); margin: 0 auto; }
+    .announcement { background: #eef8ef; color: #42624b; padding: 10px 18px; text-align: center; font-size: 11px; }
+    .announcement a { color: var(--green-dark); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; margin-left: 7px; }
+    header { height: 76px; display: flex; align-items: center; background: rgba(255,255,255,.88); border-bottom: 1px solid var(--line); }
+    nav { width: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: inline-flex; align-items: center; gap: 9px; font-size: 20px; font-weight: 700; letter-spacing: -.07em; }
+    .brand-mark { width: 29px; height: 29px; display: block; color: var(--green-dark); }
+    .nav-links { display: flex; align-items: center; gap: 34px; color: #59665e; font-size: 13px; }
+    .nav-links a { transition: color 180ms var(--ease); }
+    .nav-links a:hover { color: var(--green-dark); }
+    .nav-actions { display: flex; align-items: center; gap: 23px; font-size: 13px; }
+    .login { color: #59665e; }
+    .button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 0 19px; border: 0; border-radius: 999px; background: var(--green); color: #10321c; font-size: 13px; font-weight: 700; cursor: pointer; transition: background-color 180ms var(--ease), transform 140ms var(--ease-out), box-shadow 180ms var(--ease); }
+    .button:hover { background: #39dc76; box-shadow: 0 7px 18px rgba(37,211,102,.2); }
+    .button:active { transform: scale(.98); }
+    .button svg { width: 16px; height: 16px; }
+    .menu-toggle { display: none; border: 0; background: transparent; color: var(--ink); padding: 8px; }
+    .hero { min-height: 610px; display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 52px; padding-top: 78px; padding-bottom: 78px; position: relative; isolation: isolate; }
+    .hero::before { content: ''; position: absolute; z-index: -1; width: 580px; height: 580px; top: 4%; right: -16%; pointer-events: none; background: radial-gradient(circle, rgba(37,211,102,.13), rgba(217,253,211,.2) 38%, transparent 70%); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--green-dark); text-transform: uppercase; letter-spacing: .095em; font-size: 10px; font-weight: 700; }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(37,211,102,.12); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 520px; margin: 20px 0 18px; font-size: clamp(50px, 5.5vw, 70px); font-weight: 600; letter-spacing: -.065em; line-height: 1.02; }
+    h1 em { color: var(--green-dark); font-style: normal; }
+    .hero-copy { max-width: 440px; margin-bottom: 27px; color: var(--muted); font-size: 15px; line-height: 1.75; }
+    .hero-actions { display: flex; align-items: center; gap: 19px; }
+    .text-link { display: inline-flex; align-items: center; gap: 7px; color: var(--green-dark); font-size: 13px; font-weight: 700; }
+    .text-link svg { width: 15px; transition: transform 180ms var(--ease-out); }
+    .text-link:hover svg { transform: translateX(3px); }
+    .social-proof { display: flex; align-items: center; gap: 12px; margin-top: 36px; color: #77837a; font-size: 10px; }
+    .avatars { display: flex; padding-left: 3px; }
+    .avatar { width: 28px; height: 28px; display: grid; place-items: center; margin-left: -4px; border: 2px solid var(--bg); border-radius: 50%; color: #fff; font-size: 8px; font-weight: 700; }
+    .avatar:nth-child(1) { background: #658d71; }.avatar:nth-child(2) { background: #bd795d; }.avatar:nth-child(3) { background: #c79d4d; }.avatar:nth-child(4) { background: #657ba2; }
+    .proof-line { display: flex; flex-direction: column; gap: 3px; }.proof-line strong { color: #26352b; font-size: 10px; }
+    .chat-scene { position: relative; padding: 16px 15px 27px 24px; }
+    .chat-glow { position: absolute; inset: 7% -3% 1% 5%; border-radius: 42% 58% 58% 42% / 53% 40% 60% 47%; background: #e7f6e9; transform: rotate(-4deg); }
+    .chat-window { position: relative; width: min(100%, 535px); margin-left: auto; overflow: hidden; border: 1px solid #e0e8df; border-radius: 18px; background: #fff; box-shadow: var(--shadow); }
+    .chat-topbar { height: 51px; display: flex; align-items: center; justify-content: space-between; padding: 0 17px; border-bottom: 1px solid #edf0eb; background: #fff; }
+    .window-controls { display: flex; gap: 5px; }.window-controls i { width: 6px; height: 6px; border-radius: 50%; background: #d4ddd5; }
+    .chat-brand { display: flex; align-items: center; gap: 6px; color: var(--green-dark); font-size: 10px; font-weight: 700; }
+    .chat-brand svg { width: 16px; height: 16px; }
+    .online-state { color: #718076; font-size: 8px; }.online-state span { color: #20b95a; font-size: 10px; margin-right: 3px; }
+    .chat-body { display: grid; grid-template-columns: 155px 1fr; min-height: 350px; }
+    .chat-list { padding: 14px 9px; border-right: 1px solid #edf0eb; background: #fbfcfa; }
+    .chat-list-title { display: flex; justify-content: space-between; align-items: center; margin: 0 5px 10px; color: #26352b; font-size: 10px; font-weight: 700; }
+    .chat-list-title span { color: var(--green-dark); font-size: 8px; }
+    .chat-person { display: flex; align-items: center; gap: 8px; padding: 8px 6px; border-radius: 8px; }
+    .chat-person.active { background: #e9f7ed; }
+    .person-avatar { width: 28px; height: 28px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 50%; background: #e7ebe5; color: #536259; font-size: 8px; font-weight: 700; position: relative; }
+    .person-avatar.online::after { content: ''; position: absolute; right: 0; bottom: 0; width: 7px; height: 7px; border: 1.5px solid #fff; border-radius: 50%; background: #25d366; }
+    .person-copy { min-width: 0; flex: 1; }.person-copy strong { display: block; overflow: hidden; color: #29372e; font-size: 8px; white-space: nowrap; text-overflow: ellipsis; }.person-copy small { display: block; overflow: hidden; margin-top: 3px; color: #8a958c; font-size: 7px; white-space: nowrap; text-overflow: ellipsis; }
+    .chat-main { min-width: 0; display: flex; flex-direction: column; background: #efeae2; background-image: radial-gradient(rgba(7,94,84,.055) .7px, transparent .7px); background-size: 17px 17px; }
+    .conversation-head { display: flex; align-items: center; gap: 8px; padding: 11px 12px; border-bottom: 1px solid rgba(7,94,84,.08); background: rgba(255,255,255,.92); }
+    .conversation-head .person-avatar { width: 27px; height: 27px; background: #d9fdd3; color: #075e54; }
+    .conversation-head strong { display: block; color: #26352b; font-size: 9px; }.conversation-head small { display: block; margin-top: 2px; color: #839087; font-size: 7px; }
+    .conversation-icons { margin-left: auto; color: #637269; font-size: 14px; letter-spacing: 4px; }
+    .messages { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 15px 13px 9px; }
+    .day-stamp { align-self: center; margin: 0 0 2px; padding: 5px 8px; border-radius: 6px; background: rgba(255,255,255,.76); color: #7e8a80; font-size: 7px; box-shadow: 0 1px 1px rgba(0,0,0,.04); }
+    .bubble { width: fit-content; max-width: 86%; padding: 8px 10px 6px; border-radius: 8px; background: #fff; color: #26352b; font-size: 8px; line-height: 1.5; box-shadow: 0 1px 1px rgba(0,0,0,.08); position: relative; }
+    .bubble.incoming { border-top-left-radius: 2px; }.bubble.outgoing { align-self: flex-end; border-top-right-radius: 2px; background: var(--green-soft); }
+    .bubble-time { margin-left: 8px; color: #839087; font-size: 6px; white-space: nowrap; }.bubble-check { color: #45a7a0; font-size: 8px; margin-left: 3px; }
+    .reply-card { margin-top: 6px; border-radius: 6px; overflow: hidden; background: #e9f6e7; }
+    .reply-art { height: 72px; display: grid; place-items: center; background: linear-gradient(135deg, #d9f3d7, #91c89f 55%, #f4d7aa); font-size: 28px; }
+    .reply-caption { padding: 6px 7px; color: #5f7063; font-size: 7px; }
+    .reaction { position: absolute; right: -9px; bottom: -8px; padding: 3px 5px; border-radius: 10px; background: white; font-size: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .composer { display: flex; align-items: center; gap: 8px; margin: 0 9px 10px; padding: 7px 9px; border-radius: 999px; background: #fff; color: #8a958c; font-size: 8px; }
+    .composer .plus { color: var(--green-dark); font-size: 14px; }.composer .smile { margin-left: auto; font-size: 12px; }
+    .floating-note { position: absolute; left: -5px; bottom: 7px; display: flex; align-items: center; gap: 9px; padding: 10px 13px; border: 1px solid #e8eee7; border-radius: 12px; background: white; box-shadow: 0 12px 30px rgba(28,49,35,.12); transform: rotate(-2deg); }
+    .note-icon { width: 29px; height: 29px; display: grid; place-items: center; border-radius: 50%; background: #e9f7ed; color: var(--green-dark); font-size: 9px; font-weight: 700; }
+    .floating-note strong { display: block; margin-bottom: 3px; color: #24342a; font-size: 9px; }.floating-note small { color: #869289; font-size: 8px; }
+    .trusted { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0 25px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: #758177; }
+    .trusted-label { max-width: 180px; font-size: 10px; line-height: 1.5; }
+    .brand-list { display: flex; align-items: center; gap: clamp(18px, 4vw, 50px); color: #829087; font-size: 11px; font-weight: 700; }
+    .brand-list span { display: inline-flex; align-items: center; gap: 6px; }.brand-list i { color: var(--green-dark); font-size: 14px; font-style: normal; }
+    .section { padding: 98px 0; }
+    .section-head { max-width: 590px; margin: 0 auto 43px; text-align: center; }
+    .section-head h2, .cta h2 { margin: 14px 0; font-size: clamp(34px, 4.4vw, 49px); font-weight: 600; line-height: 1.1; letter-spacing: -.055em; }
+    .section-head p, .cta-copy { max-width: 460px; margin: 0 auto; color: var(--muted); font-size: 13px; line-height: 1.75; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .feature-card { min-height: 245px; padding: 24px; border: 1px solid #e8eee7; border-radius: 14px; background: #fff; box-shadow: 0 2px 8px rgba(28,49,35,.035); }
+    .feature-icon { width: 40px; height: 40px; display: grid; place-items: center; margin-bottom: 28px; border-radius: 12px; background: #e9f7ed; color: var(--green-dark); }
+    .feature-icon svg { width: 19px; height: 19px; }
+    .feature-card h3 { margin-bottom: 9px; font-size: 15px; letter-spacing: -.02em; }
+    .feature-card p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.75; }
+    .privacy { padding: 73px 0; background: #eff8f0; }
+    .privacy-inner { display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items: center; }
+    .privacy h2 { max-width: 420px; margin: 14px 0; font-size: clamp(32px, 4vw, 44px); line-height: 1.12; letter-spacing: -.05em; font-weight: 600; }
+    .privacy-copy { max-width: 400px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .privacy-card { padding: 25px; border: 1px solid #dcebdd; border-radius: 15px; background: #fff; box-shadow: 0 12px 35px rgba(28,49,35,.06); }
+    .privacy-lock { width: 43px; height: 43px; display: grid; place-items: center; margin-bottom: 20px; border-radius: 13px; background: #e9f7ed; color: var(--green-dark); }
+    .privacy-lock svg { width: 21px; height: 21px; }
+    .privacy-card strong { display: block; margin-bottom: 7px; font-size: 13px; }
+    .privacy-card p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .cta { padding: 88px 0 94px; text-align: center; }
+    .cta h2 { max-width: 610px; margin: 14px auto 13px; }
+    .cta-copy { margin-bottom: 24px; }
+    .cta-actions { display: flex; align-items: center; justify-content: center; gap: 11px; }
+    .button.secondary { border: 1px solid #dce6dc; background: #fff; color: var(--green-dark); }
+    .button.secondary:hover { background: #eff8f0; box-shadow: none; }
+    footer { padding: 23px 0 29px; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: #839087; font-size: 10px; }
+    .footer-links { display: flex; gap: 20px; }.footer-links a:hover { color: var(--green-dark); }
+    .reveal { opacity: 0; transform: translateY(10px); animation: rise 620ms var(--ease-out) forwards; }
+    .reveal.delay-1 { animation-delay: 60ms; }.reveal.delay-2 { animation-delay: 120ms; }.reveal.delay-3 { animation-delay: 180ms; }
+    @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+    .js .scroll-reveal { opacity: 0; transform: translateY(14px); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); }
+    .js .scroll-reveal[data-visible] { opacity: 1; transform: translateY(0); }
+    .js .feature-card[data-visible] { transition: opacity 500ms var(--ease-out), transform 180ms var(--ease-out), border-color 180ms var(--ease); }
+    .message-in { opacity: 0; transform: translateY(7px); animation: message-in 320ms var(--ease-out) forwards; }
+    .message-in.delay { animation-delay: 80ms; }
+    @keyframes message-in { to { opacity: 1; transform: translateY(0); } }
+    @media (hover: hover) and (pointer: fine) {
+      .feature-card { transition: transform 180ms var(--ease-out), border-color 180ms var(--ease); }
+      .feature-card:hover { transform: translateY(-3px); border-color: #c3dfc7; }
+    }
+    @media (max-width: 900px) {
+      .hero { gap: 25px; }.chat-body { grid-template-columns: 127px 1fr; }.chat-list { padding-inline: 6px; }
+      .privacy-inner { gap: 35px; }.nav-links { gap: 20px; }
+    }
+    @media (max-width: 700px) {
+      .shell { width: min(100% - 36px, 520px); }
+      .announcement { font-size: 9px; padding: 9px 12px; }
+      header { height: 66px; }.menu-toggle { display: inline-flex; }
+      .nav-links { display: none; position: absolute; z-index: 5; top: 101px; left: 18px; right: 18px; padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: #fff; box-shadow: 0 14px 30px rgba(28,49,35,.1); flex-direction: column; align-items: stretch; gap: 0; }
+      .nav-links.open { display: flex; }.nav-links a { padding: 12px 8px; }.nav-actions .login { display: none; }.nav-actions .button { min-height: 39px; padding: 0 14px; font-size: 11px; }
+      .hero { display: flex; flex-direction: column; align-items: stretch; gap: 39px; padding-top: 48px; padding-bottom: 52px; }
+      h1 { max-width: 500px; font-size: clamp(46px, 12vw, 62px); margin-top: 17px; }.hero-copy { font-size: 13px; }
+      .chat-scene { padding: 0 0 12px 5px; }.chat-window { border-radius: 14px; }.chat-body { grid-template-columns: 112px 1fr; min-height: 325px; }.chat-list { padding: 12px 5px; }.chat-person { gap: 5px; padding: 7px 4px; }.person-avatar { width: 24px; height: 24px; }.person-copy strong { font-size: 7px; }.person-copy small { font-size: 6px; }.chat-list-title { font-size: 9px; margin-inline: 4px; }
+      .messages { padding-inline: 8px; }.bubble { max-width: 94%; }.floating-note { left: -5px; bottom: -1px; }
+      .trusted { align-items: flex-start; flex-direction: column; gap: 15px; }.trusted-label { max-width: none; }.brand-list { width: 100%; justify-content: space-between; gap: 7px; font-size: 9px; }.brand-list i { display: none; }
+      .section { padding: 72px 0; }.section-head { margin-bottom: 30px; }.feature-grid { grid-template-columns: 1fr; gap: 10px; }.feature-card { min-height: auto; padding: 20px; }.feature-icon { margin-bottom: 18px; }
+      .privacy { padding: 58px 0; }.privacy-inner { grid-template-columns: 1fr; gap: 25px; }.privacy-card { padding: 20px; }
+      .cta { padding: 72px 0 76px; }.cta-actions { flex-direction: column; align-items: stretch; max-width: 270px; margin: 0 auto; }
+      .footer-inner { align-items: flex-start; flex-direction: column; gap: 14px; }.footer-links { gap: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal, .message-in { animation: none; opacity: 1; transform: none; }
+      .js .scroll-reveal { opacity: 1; transform: none; transition: none; }
+      .button:active, .feature-card:hover, .text-link:hover svg { transform: none; }
+      .button, .feature-card, .text-link svg { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement">Mimo’da sohbetin yeni hâliyle tanış <a href="#ozellikler">Neler var? <span aria-hidden="true">↗</span></a></div>
+  <header>
+    <nav class="shell" aria-label="Ana gezinme">
+      <a class="brand" href="#top" aria-label="Mimo ana sayfa">
+        <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 3.5c-7 0-12.5 4.9-12.5 11 0 2.7 1.1 5.1 3 7l-.7 6 6-2.6c1.3.4 2.7.6 4.2.6 7 0 12.5-4.9 12.5-11S23 3.5 16 3.5Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M10 14h.1M16 14h.1M22 14h.1" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg>
+        mimo
+      </a>
+      <div class="nav-links" id="navLinks"><a href="#ozellikler">Özellikler</a><a href="#gizlilik">Gizlilik</a><a href="#indir">İndir</a></div>
+      <div class="nav-actions"><a class="login" href="chat.html">Giriş yap</a><a class="button" href="#indir">Ücretsiz indir <span aria-hidden="true">↗</span></a><button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç" aria-expanded="false" aria-controls="navLinks"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
+    </nav>
+  </header>
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-content">
+        <div class="eyebrow reveal"><span class="eyebrow-dot"></span> Yakınların hep yanında</div>
+        <h1 class="reveal delay-1">Sevdiklerin,<br /><em>bir mesaj uzağında.</em></h1>
+        <p class="hero-copy reveal delay-2">Günün içinden küçük bir selam, uzun bir sesli mesaj ya da kalabalık bir grup sohbeti. Mimo’da konuşmak, yüz yüze gelmek kadar kolay.</p>
+        <div class="hero-actions reveal delay-3"><a class="button" href="#indir">Mimo’yu ücretsiz indir <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="text-link" href="#ozellikler">Keşfet <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="social-proof reveal delay-3"><div class="avatars" aria-hidden="true"><span class="avatar">DY</span><span class="avatar">EA</span><span class="avatar">MK</span><span class="avatar">AS</span></div><div class="proof-line"><strong>İnsanların konuştuğu yerde</strong><span>Arkadaşların, ailen ve tüm favori grupların.</span></div></div>
+      </div>
+      <div class="chat-scene" aria-label="Mimo sohbet uygulaması önizlemesi">
+        <div class="chat-glow"></div>
+        <div class="chat-window">
+          <div class="chat-topbar"><div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div><span class="chat-brand"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.8c-5.2 0-9.2 3.7-9.2 8.2 0 2 0.8 3.8 2.2 5.2l-.5 4.5 4.4-1.9c1 .3 2 .4 3.1.4 5.2 0 9.2-3.7 9.2-8.2s-4-8.2-9.2-8.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 11h.1M12 11h.1M16 11h.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> mimo</span><span class="online-state"><span>●</span> Her şey yolunda</span></div>
+          <div class="chat-body">
+            <aside class="chat-list"><div class="chat-list-title">Sohbetler <span>＋</span></div>
+              <div class="chat-person active"><span class="person-avatar online">YA</span><span class="person-copy"><strong>Yakın arkadaşlar</strong><small>Deniz: Tamamdır 🌿</small></span></div>
+              <div class="chat-person"><span class="person-avatar online">AE</span><span class="person-copy"><strong>Ayşe E.</strong><small>Bir ses gönderdi</small></span></div>
+              <div class="chat-person"><span class="person-avatar">Aİ</span><span class="person-copy"><strong>Aile grubu</strong><small>Bugün kim müsait?</small></span></div>
+              <div class="chat-person"><span class="person-avatar online">BK</span><span class="person-copy"><strong>Bora K.</strong><small>Son görülme şimdi</small></span></div>
+              <div class="chat-person"><span class="person-avatar">MK</span><span class="person-copy"><strong>Melis K.</strong><small>Fotoğraf gönderdi</small></span></div>
+            </aside>
+            <div class="chat-main">
+              <div class="conversation-head"><span class="person-avatar">YA</span><span><strong>Yakın arkadaşlar</strong><small>Ayşe, Bora, Deniz ve sen</small></span><span class="conversation-icons" aria-hidden="true">⌕ ⋮</span></div>
+              <div class="messages"><span class="day-stamp">BUGÜN</span>
+                <div class="bubble incoming message-in">Hafta sonu için plan yapalım mı? <span class="bubble-time">10:41</span></div>
+                <div class="bubble outgoing message-in delay">Ben varım 🙌 <span class="bubble-time">10:42</span><span class="bubble-check">✓✓</span></div>
+                <div class="bubble incoming">Şu sahil tarafındaki küçük kafeye ne dersiniz? ☀️ <span class="bubble-time">10:42</span></div>
+                <div class="bubble outgoing">Çok iyi fikir. Saat 11 gibi? <span class="bubble-time">10:43</span><span class="bubble-check">✓✓</span><span class="reaction">💚 2</span></div>
+              </div>
+              <div class="composer"><span class="plus">＋</span><span>Bir mesaj yaz</span><span class="smile">☺</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-note"><span class="note-icon">AE</span><span><strong>Ayşe sana sesli mesaj gönderdi</strong><small>0:18 · Dinlemek için hazır</small></span></div>
+      </div>
+    </section>
+    <section class="trusted shell" aria-label="Mimo sohbet topluluğu"><div class="trusted-label">Her gün paylaşılan küçük anlar, büyük yakınlıklar</div><div class="brand-list"><span><i>♡</i> Aile sohbetleri</span><span><i>☻</i> Yakın arkadaşlar</span><span><i>♫</i> Sesli mesajlar</span><span><i>✳</i> Günlük paylaşımlar</span></div></section>
+    <section class="section shell" id="ozellikler">
+      <div class="section-head"><div class="eyebrow"><span class="eyebrow-dot"></span> Sohbetin iyi hissettiren hâli</div><h2>Bir mesajdan çok daha fazlası.</h2><p>İçinden geldiği gibi konuş. Mimo, paylaşmanın ve bağlantıda kalmanın en kolay yolu.</p></div>
+      <div class="feature-grid">
+        <article class="feature-card"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-3 7.8-7 10-4-2.2-7-5.5-7-10V6l7-3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>İçin rahat, sohbetin sana ait</h3><p>Gizlilik ayarlarını kendine göre seç. Kimlerin sana ulaşabileceğini ve neleri paylaşacağını sen belirlersin.</p></article>
+        <article class="feature-card"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 18.5 3.5 21v-5.2A8.5 8.5 0 1 1 7 18.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 10h8M8 13.5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div><h3>Grupça konuşmak çok kolay</h3><p>En yakın arkadaşlarından kalabalık aile grubuna kadar, herkes aynı sohbette ve aynı anda.</p></article>
+        <article class="feature-card"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="8" y="3" width="8" height="13" rx="4" stroke="currentColor" stroke-width="1.7"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-3 0h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div><h3>Bazen sesin yeter</h3><p>Yazmak uzun geliyorsa sesini bırak. Fotoğraf, video ve tepkilerle anı olduğu gibi paylaş.</p></article>
+      </div>
+    </section>
+    <section class="privacy" id="gizlilik"><div class="shell privacy-inner">
+      <div><div class="eyebrow"><span class="eyebrow-dot"></span> Senin sınırların, senin kararın</div><h2>Sohbetin sana ait. Kontrol de.</h2><p class="privacy-copy">Kişisel alanını kolayca yönet. Son görülme, profil fotoğrafı ve durumunu kimlerin göreceğine sen karar ver.</p></div>
+      <div class="privacy-card"><span class="privacy-lock"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10" width="15" height="11" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><strong>Gizlilik ayarların tek yerde</strong><p>Profil bilgilerini ve çevrimiçi durumunu kimlerin görebileceğini seç. İstediğinde değiştirmen de çok kolay.</p></div>
+    </div></section>
+    <section class="cta" id="indir"><div class="shell"><div class="eyebrow"><span class="eyebrow-dot"></span> Mimo’ya merhaba de</div><h2>Güzel bir sohbet başlat.</h2><p class="cta-copy">Mimo’yu telefonunda ve bilgisayarında kullan. Sevdiklerinle bağlantıda kalmak ücretsiz.</p><div class="cta-actions"><a class="button" href="#top">Telefon için indir <span aria-hidden="true">↗</span></a><a class="button secondary" href="#top">Masaüstünde kullan</a></div></div></section>
+  </main>
+  <footer><div class="shell footer-inner"><a class="brand" href="#top"><svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 3.5c-7 0-12.5 4.9-12.5 11 0 2.7 1.1 5.1 3 7l-.7 6 6-2.6c1.3.4 2.7.6 4.2.6 7 0 12.5-4.9 12.5-11S23 3.5 16 3.5Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M11 14h.1M16 14h.1M21 14h.1" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg>mimo</a><span>© 2026 Mimo</span><div class="footer-links"><a href="#gizlilik">Gizlilik</a><a href="#ozellikler">Özellikler</a><a href="#indir">İndir</a></div></div></footer>
+  <script>
+    document.documentElement.classList.add('js');
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const revealTargets = document.querySelectorAll('.section-head, .feature-card, .privacy-inner > div, .cta .eyebrow, .cta h2, .cta-copy, .cta-actions');
+    if ('IntersectionObserver' in window && !motionPreference.matches) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.dataset.visible = '';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -4% 0px', threshold: 0.05 });
+      revealTargets.forEach(target => { target.classList.add('scroll-reveal'); revealObserver.observe(target); });
+    } else {
+      revealTargets.forEach(target => target.dataset.visible = '');
+    }
+    const menuToggle = document.querySelector('#menuToggle');
+    const navLinks = document.querySelector('#navLinks');
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Menüyü aç' : 'Menüyü kapat');
+      navLinks.classList.toggle('open', !isOpen);
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Menüyü aç');
+    }));
+  </script>
+</body>
+</html>
